@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project 001</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin: 20px;
+      background-color: #333; 
+      color: #fff; 
+    }
+
+    #input-container, #output-container {
+      width: 100%;
+      max-width: 600px; 
+      margin-bottom: 20px;
+    }
+
+    #input-container {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-sizing: border-box; 
+      background-color: #fff; 
+    }
+
+    #output-container {
+      text-align: left;
+      overflow-y: auto;
+      max-height: 300px; 
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 8px;
+      box-sizing: border-box; 
+      background-color: #fff; 
+      color: #000; 
+    }
+
+    input {
+      margin: 5px;
+      padding: 8px;
+      width: calc(100% - 16px); 
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 5px;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <h1>Project Hitung Nilai Mahasiswa</h1>
+
+  <div id="input-container">
+    <label for="nama">Nama Mahasiswa: </label>
+    <input type="text" id="nama" placeholder="Masukkan Nama Mahasiswa">
+
+    <br>
+
+    <label for="nim">NIM Mahasiswa: </label>
+    <input type="text" id="nim" placeholder="Masukkan NIM Mahasiswa">
+
+    <br>
+
+    <label for="nilai">Nilai Mahasiswa: </label>
+    <input type="number" id="nilai" placeholder="Masukkan Nilai Mahasiswa">
+
+    <br>
+
+    <button onclick="hitungNilai()">Hitung Nilai</button>
+  </div>
+
+  <div id="output-container">
+    <div id="output"></div>
+  </div>
+
+  <script>
+    let outputs = [];
+
+    function hitungNilai() {
+      let nama = document.getElementById("nama").value;
+      let nim = document.getElementById("nim").value;
+      let nilai = document.getElementById("nilai").value;
+
+      // Convert nilai to a number
+      nilai = parseInt(nilai);
+
+      var bilangan1 = function (nilai, x) {
+        if (nilai % x == 0) {
+          return ("Bilangan genap");
+        } else {
+          return ("Bilangan ganjil");
+        }
+      }
+
+      let result = "";
+
+      if (nilai >= 0 && nilai <= 59) {
+        result = `Nama: ${nama}\nNIM: ${nim}\nNilai angka: ${nilai}\nNilai huruf: D\n${bilangan1(nilai, 2)}`;
+      } else if (nilai >= 60 && nilai <= 74) {
+        result = `Nama: ${nama}\nNIM: ${nim}\nNilai angka: ${nilai}\nNilai huruf: C\n${bilangan1(nilai, 2)}`;
+      } else if (nilai >= 75 && nilai <= 84) {
+        result = `Nama: ${nama}\nNIM: ${nim}\nNilai angka: ${nilai}\nNilai huruf: B\n${bilangan1(nilai, 2)}`;
+      } else if (nilai >= 85 && nilai <= 100) {
+        result = `Nama: ${nama}\nNIM: ${nim}\nNilai angka: ${nilai}\nNilai huruf: A\n${bilangan1(nilai, 2)}`;
+      }
+
+      outputs.push(result);
+      displayOutputs();
+    }
+
+    function displayOutputs() {
+      let outputElement = document.getElementById("output");
+      outputElement.innerHTML = "<h2>Hasil:</h2>";
+      
+      if (outputs.length === 0) {
+        outputElement.innerHTML += "<p>Belum ada hasil.</p>";
+      } else {
+        outputElement.innerHTML += "<table>";
+        outputElement.innerHTML += "<tr><th></th></tr>";
+        outputs.forEach((output, index) => {
+          outputElement.innerHTML += `<tr><td>${index + 1}</td><td><pre>${output}</pre></td></tr>`;
+        });
+        outputElement.innerHTML += "</table>";
+      }
+    }
+  </script>
+</body>
+</html>
