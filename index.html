@@ -1,76 +1,156 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project 001</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin: 20px;
+      background-color: #333; 
+      color: #fff; 
+    }
 
-    <title>Narrow Jumbotron Template for Bootstrap</title>
+    #input-container, #output-container {
+      width: 100%;
+      max-width: 600px; 
+      margin-bottom: 20px;
+    }
 
-    <!-- Bootstrap core CSS -->
-    <link href="../../css/editor.css" rel="stylesheet">
+    #input-container {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-sizing: border-box; 
+      background-color: #fff; 
+    }
 
-    <!-- Custom styles for this template -->
-    <link href="narrow-jumbotron.css" rel="stylesheet">
-  </head>
+    #output-container {
+      text-align: left;
+      overflow-y: auto;
+      max-height: 300px; 
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 8px;
+      box-sizing: border-box; 
+      background-color: #fff; 
+      color: #000; 
+    }
 
-  <body>
+    input {
+      margin: 5px;
+      padding: 8px;
+      width: calc(100% - 16px); 
+      box-sizing: border-box;
+    }
 
-    <div class="container">
-      <div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills float-right">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
-          </ul>
-        </nav>
-        <h3 class="text-muted">Project name</h3>
-      </div>
+    button {
+      margin-top: 5px;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
-      <div class="jumbotron">
-        <h1 class="display-3">Jumbotron heading</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-      </div>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
 
-      <div class="row marketing">
-        <div class="col-lg-6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
 
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+    th {
+      background-color: #f2f2f2;
+    }
+    
+  </style>
+</head>
+<body>
 
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
+  <h1>Project Hitung Nilai Mahasiswa</h1>
 
-        <div class="col-lg-6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+  <div id="input-container">
+    <label for="nama">Nama Mahasiswa: </label>
+    <input type="text" id="nama" placeholder="Masukkan Nama Mahasiswa">
 
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+    <br>
 
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-      </div>
+    <label for="nim">NIM Mahasiswa: </label>
+    <input type="text" id="nim" placeholder="Masukkan NIM Mahasiswa">
 
-      <footer class="footer">
-        <p>© Company 2017</p>
-      </footer>
+    <br>
 
-    </div> <!-- /container -->
-  
+    <label for="nilai">Nilai Mahasiswa: </label>
+    <input type="number" id="nilai" placeholder="Masukkan Nilai Mahasiswa">
 
+    <br>
+
+    <button onclick="hitungNilai()">Hitung Nilai</button>
+  </div>
+
+  <div id="output-container">
+    <div id="output"></div>
+  </div>
+
+  <script>
+    let outputs = [];
+
+    function hitungNilai() {
+      let nama = document.getElementById("nama").value;
+      let nim = document.getElementById("nim").value;
+      let nilai = document.getElementById("nilai").value;
+
+      // Convert nilai to a number
+      nilai = parseInt(nilai);
+
+      var bilangan1 = function (nilai, x) {
+        if (nilai % x == 0) {
+          return ("Bilangan genap");
+        } else {
+          return ("Bilangan ganjil");
+        }
+      }
+
+      let result = "";
+
+      if (nilai >= 0 && nilai <= 59) {
+        result = `Nama: ${nama}\nNIM: ${nim}\nNilai angka: ${nilai}\nNilai huruf: D\n${bilangan1(nilai, 2)}`;
+      } else if (nilai >= 60 && nilai <= 74) {
+        result = `Nama: ${nama}\nNIM: ${nim}\nNilai angka: ${nilai}\nNilai huruf: C\n${bilangan1(nilai, 2)}`;
+      } else if (nilai >= 75 && nilai <= 84) {
+        result = `Nama: ${nama}\nNIM: ${nim}\nNilai angka: ${nilai}\nNilai huruf: B\n${bilangan1(nilai, 2)}`;
+      } else if (nilai >= 85 && nilai <= 100) {
+        result = `Nama: ${nama}\nNIM: ${nim}\nNilai angka: ${nilai}\nNilai huruf: A\n${bilangan1(nilai, 2)}`;
+      }
+
+      outputs.push(result);
+      displayOutputs();
+    }
+
+    function displayOutputs() {
+      let outputElement = document.getElementById("output");
+      outputElement.innerHTML = "<h2>Hasil:</h2>";
+      
+      if (outputs.length === 0) {
+        outputElement.innerHTML += "<p>Belum ada hasil.</p>";
+      } else {
+        outputElement.innerHTML += "<table>";
+        outputElement.innerHTML += "<tr><th></th></tr>";
+        outputs.forEach((output, index) => {
+          outputElement.innerHTML += `<tr><td>${index + 1}</td><td><pre>${output}</pre></td></tr>`;
+        });
+        outputElement.innerHTML += "</table>";
+      }
+    }
+  </script>
 </body>
 </html>
